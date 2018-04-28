@@ -14,5 +14,14 @@ namespace ships_api_tests
 
             Assert.Equal("2 1 E", response);
         }
+
+        [Fact]
+        public void CanNavigateLeft()
+        {
+            var sut = new NavigationService(5, 3);
+            var response = sut.ProcessShipInstructions("1 1 E", "L");
+
+            Assert.Equal("1 1 N", response);
+        }
     }
 }
