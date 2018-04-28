@@ -70,6 +70,25 @@ namespace ships_api.Services
                 }
             }
 
+            if(navigationalOperation == 'R')
+            {
+                switch(currentPosition.Direction)
+                {
+                    case 'N':
+                        currentPosition.Direction = 'E';
+                        break;
+                    case 'E':
+                        currentPosition.Direction = 'S';
+                        break;
+                    case 'S':
+                        currentPosition.Direction = 'W';
+                        break;
+                    case 'W':
+                        currentPosition.Direction = 'N';
+                        break;                    
+                }
+            }
+
             return currentPosition;
         }
 
