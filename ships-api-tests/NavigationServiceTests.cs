@@ -41,5 +41,14 @@ namespace ships_api_tests
 
             Assert.Equal("1 1 E", response);
         }
+
+        [Fact]
+        public void CanNavigateSecondCycle()
+        {
+            var sut = new NavigationService(5, 3);
+            var response = sut.ProcessShipInstructions("3 2 N", "FRRFLLFFRRFLL");
+
+            Assert.Equal("3 3 N LOST", response);
+        }
     }
 }
