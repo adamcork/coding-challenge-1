@@ -61,5 +61,17 @@ namespace ships_api_tests
             Assert.Equal("3 3 N LOST", response);
             Assert.Equal("2 3 S", response2);
         }
+
+        [Fact]
+        public void CanProcessFullSampleSequence()
+        {
+            var sut = new NavigationService(5, 3);
+            var response = sut.ProcessShipInstructions("1 1 E", "RFRFRFRF");
+            var response2 = sut.ProcessShipInstructions("3 2 N", "FRRFLLFFRRFLL");
+            var response3 = sut.ProcessShipInstructions("0 3 W", "LLFFFLFLFL");
+
+            Assert.Equal("3 3 N LOST", response2);
+            Assert.Equal("2 3 S", response3);
+        }
     }
 }
