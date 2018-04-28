@@ -32,5 +32,14 @@ namespace ships_api_tests
 
             Assert.Equal("1 1 S", response);
         }
+
+        [Fact]
+        public void CanNavigateFirstFullCycle()
+        {
+            var sut = new NavigationService(5, 3);
+            var response = sut.ProcessShipInstructions("1 1 E", "RFRFRFRF");
+
+            Assert.Equal("1 1 E", response);
+        }
     }
 }
