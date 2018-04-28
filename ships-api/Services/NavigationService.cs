@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ships_api.Services
 {
@@ -12,6 +13,8 @@ namespace ships_api.Services
     {
         private Int16 _gridXMaximum;
         private Int16 _gridYMaximum;
+
+        private List<ShipPosition> _lostShipsLastPositions = new List<ShipPosition>();
 
         public NavigationService(Int16 gridXMaximum, Int16 gridYMaximum)
         {
@@ -27,10 +30,16 @@ namespace ships_api.Services
 
             foreach(char c in navigationalSequence)
             {
+                if(c == 'F' &&_lostShipsLastPositions.Contains(currentPosition))
+                {
+                    continue;
+                }
+
                 var newPosition = ApplyTransition(currentPosition, c);
                 if(newPosition.XCoordinate < 0 || newPosition.YCoordinate < 0 || newPosition.XCoordinate > _gridXMaximum || newPosition.YCoordinate > _gridYMaximum)
                 {
                     lost = " LOST";
+                    _lostShipsLastPositions.Add(currentPosition);
                     break;
                 }
 
