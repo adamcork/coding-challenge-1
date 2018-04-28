@@ -50,5 +50,16 @@ namespace ships_api_tests
 
             Assert.Equal("3 3 N LOST", response);
         }
+
+        [Fact]
+        public void CanAvoidPreviousLostShip()
+        {
+            var sut = new NavigationService(5, 3);
+            var response = sut.ProcessShipInstructions("3 2 N", "FRRFLLFFRRFLL");
+            var response2 = sut.ProcessShipInstructions("0 3 W", "LLFFFLFLFL");
+
+            Assert.Equal("3 3 N LOST", response);
+            Assert.Equal("2 3 S", response2);
+        }
     }
 }
