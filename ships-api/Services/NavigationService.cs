@@ -22,12 +22,22 @@ namespace ships_api.Services
         public string ProcessShipInstructions(string startingPosition, string navigationalSequence)
         {
             var currentPosition = SplitPositionString(startingPosition);
+
+            var lost = "";
+
             foreach(char c in navigationalSequence)
             {
-                currentPosition = ApplyTransition(currentPosition, c);
+                var newPosition = ApplyTransition(currentPosition, c);
+                if(newPosition.XCoordinate < 0 || newPosition.YCoordinate < 0 || newPosition.XCoordinate > _gridXMaximum || newPosition.YCoordinate > _gridYMaximum)
+                {
+                    lost = " LOST";
+                    break;
+                }
+
+                currentPosition = newPosition;
             }
 
-            return $"{currentPosition.XCoordinate} {currentPosition.YCoordinate} {currentPosition.Direction}";
+            return $"{currentPosition.XCoordinate} {currentPosition.YCoordinate} {currentPosition.Direction}{lost}";
         }
 
         private ShipPosition ApplyTransition(ShipPosition currentPosition, char navigationalOperation)
